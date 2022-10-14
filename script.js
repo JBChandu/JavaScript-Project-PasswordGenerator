@@ -24,7 +24,7 @@ clipboardEl.addEventListener("click", (e) => {
 generateEl.addEventListener("click", () => {
   let len = lengthEl.value;
   // for input length
-  if (len === "" || len <= 4 || len > 20) {
+  if (len === "" || len < 4 || len > 20) {
     alert("Enter or select some value between 4 and 20");
   }
   // for check boxes
@@ -48,13 +48,27 @@ generateEl.addEventListener("click", () => {
     numbersEl.checked !== true
   ) {
     alert("please check atleast one checkbox");
+    resultEl.innerText = "";
+  } else {
+    resultEl.innerText = generatePassword(low, up, numb, sym, len);
   }
-
-  resultEl.innerText = generatePassword(low, up, numb, sym, len);
 });
 
 function generatePassword(lower, upper, number, symbol, length) {
-  let newWord = lower + upper + number + symbol;
+  let newWord = "";
+  if (lower !== undefined) {
+    newWord += lower;
+  }
+  if (upper !== undefined) {
+    newWord += upper;
+  }
+  if (number !== undefined) {
+    newWord += number;
+  }
+  if (symbol !== undefined) {
+    newWord += symbol;
+  }
+
   let result = "";
   for (let i = 0; i < length; i++) {
     result += newWord[Math.ceil(Math.random() * newWord.length - 1)];
